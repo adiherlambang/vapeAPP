@@ -7,7 +7,7 @@ package Admin;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import Login.LoginForm;
+import login.Login;
 
 /**
  *
@@ -179,7 +179,7 @@ public class AddUser extends javax.swing.JFrame {
         switch (input){
             case 0: //input yes
                 this.dispose();
-                JFrame login_frame = new LoginForm();
+                JFrame login_frame = new login.Login();
                 login_frame.setVisible(true);
                 break; 
             case 1: //input no

@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Sales;
+package sales;
 
 
 import BackgorundIMg.IconTable;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultListModel;
 import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import Login.UserStatus;
+import login.UserStatus;
 
 /**
  *
@@ -30,12 +33,8 @@ public class SalesForm extends javax.swing.JFrame {
         jList1.setModel(dmJenisBarang);
         
         jLabel9.setText(UserStatus.getUserName());   
-        jLabel5.setText(new SalesData().generatedID());       
-           
+        jLabel5.setText(new SalesData().generatedID());
     }
-    
-    
-    
 
     /**
      *
@@ -86,7 +85,7 @@ public class SalesForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Jenis Vape", "Jumlah Vape", "Action"
+                "Jenis Vape", "Jumlah / Pcs", "Action"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -98,11 +97,8 @@ public class SalesForm extends javax.swing.JFrame {
             }
         });
         jTable1.setColumnSelectionAllowed(true);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setRowHeight(50);
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jTable1.setRowHeight(100);
 
         jLabel4.setText("Jenis Vape");
 
@@ -110,17 +106,6 @@ public class SalesForm extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
-            }
-        });
-        jList1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jList1KeyPressed(evt);
-            }
         });
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -189,7 +174,7 @@ public class SalesForm extends javax.swing.JFrame {
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel6))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -210,7 +195,7 @@ public class SalesForm extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -247,41 +232,39 @@ public class SalesForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        // TODO add your handling code here: 
-
-        
-    }//GEN-LAST:event_jList1ValueChanged
-
-    private void jList1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jList1KeyPressed
-        // TODO add your handling code here:
- 
-    }//GEN-LAST:event_jList1KeyPressed
-
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
         // TODO add your handling code here:
         DefaultTableModel dmPemesanan = (DefaultTableModel) jTable1.getModel();
-        DefaultListModel vape = (DefaultListModel) jList1.getModel();
-        Object val = jList1.getSelectedValue();
+        Object val = jList1.getSelectedValue(); 
         Object row[] = {
-            val,"",""
+            val,"",new JLabel()
         };
-        jTable1.getColumnModel().getColumn(2).setCellRenderer(new IconTable("src/Img/delete.png"));
-         if (evt.isPopupTrigger()== false) {
+         if (evt.getValueIsAdjusting() == false) {          
              if(jList1.getSelectedIndex()==-1){
                 //nothing to do 
              }else{                         
-                dmPemesanan.addRow(row);
-                //vape.removeElement(val);
+                 dmPemesanan.addRow(row);
+                 JTable table = new JTable(dmPemesanan){
+                     @Override
+                     public Class getColumnClass(int columnIndex)
+                     {
+                         if(columnIndex == 2)return getValueAt(2, columnIndex).getClass();
+                         
+                         else return super.getColumnClass(columnIndex);
+                     }
+                 };
+                 table.setModel(dmPemesanan);
+                 table.setDefaultRenderer(JLabel.class, new IconTable());
+                 table.setVisible(true);
              }
         }
-    }//GEN-LAST:event_jList1MouseClicked
+        
+    }//GEN-LAST:event_jList1ValueChanged
 
     /**
      * @param args the command line arguments

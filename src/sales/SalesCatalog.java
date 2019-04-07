@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Sales;
+package sales;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -133,7 +133,7 @@ public void close(){
         switch (input){
             case 0: //input yes
                 this.dispose();
-                JFrame login_frame = new Login.LoginForm();
+                JFrame login_frame = new login.Login();
                 login_frame.setVisible(true);
                 break; 
             case 1: //input no
@@ -144,7 +144,7 @@ public void close(){
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        JFrame salesForm_frame = new Sales.SalesForm();
+        JFrame salesForm_frame = new sales.SalesForm();
         salesForm_frame.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -152,7 +152,7 @@ public void close(){
         // TODO add your handling code here:
     Object Val = jList1.getSelectedValue();   
     BufferedImage img = null;
-    File f = new File("src\\Img\\"+Val+".png");
+    
     JFrame salesCatalog = new JFrame();
     if (evt.getValueIsAdjusting() == false) {          
             if (jList1.getSelectedIndex() == -1) {
@@ -160,18 +160,18 @@ public void close(){
             } else {
             //Selection, enable the fire button.
                 //System.out.print("D:\\vapeCatalog\\VapeApp\\src\\Img\\"+Val+".png");
-                try{                    
+                try{
+                    File f = new File("D:\\vapeCatalog\\VapeApp\\src\\Img\\"+Val+".png");
                     img = ImageIO.read(f);
                     //System.out.println(f);
                     BackgroundPanel background =  new BackgroundPanel(img, BackgroundPanel.SCALED, 0.50f, 0.5f);
                     salesCatalog.setContentPane(background);
-                    salesCatalog.setSize(500,500);
-                    salesCatalog.setLocationRelativeTo(null);
+                    salesCatalog.setSize(1000,1000);
+                    salesCatalog.setLocation(250,0);
                     salesCatalog.setVisible(true);                   
                     salesCatalog.setTitle(String.valueOf(Val));
                 }catch(Exception e){
-                    System.out.println(Val);
-                    JOptionPane.showMessageDialog(null, e);
+                    System.out.println("Cannot read file: " + e);
                 }              
             }           
         }

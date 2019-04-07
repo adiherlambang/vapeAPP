@@ -5,11 +5,13 @@
  */
 package sales;
 
-import distributor.DistributorData;
+
+import BackgorundIMg.IconTable;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultListModel;
 import java.util.Date;
-import javax.swing.JList;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import login.UserStatus;
@@ -30,9 +32,10 @@ public class SalesForm extends javax.swing.JFrame {
         DefaultListModel dmJenisBarang = new SalesData().getJenisBarang();
         jList1.setModel(dmJenisBarang);
         
-        jLabel9.setText(UserStatus.getUserName());      
+        jLabel9.setText(UserStatus.getUserName());   
+        jLabel5.setText(new SalesData().generatedID());
     }
-    
+
     /**
      *
      */
@@ -82,19 +85,12 @@ public class SalesForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Jenis Vape", "Jumlah (/pcs)"
+                "Jenis Vape", "Jumlah / Pcs", "Action"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, true, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -102,11 +98,7 @@ public class SalesForm extends javax.swing.JFrame {
         });
         jTable1.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-        }
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         jLabel4.setText("Jenis Vape");
 
@@ -166,9 +158,9 @@ public class SalesForm extends javax.swing.JFrame {
                                             .addComponent(jLabel3)
                                             .addComponent(jLabel4)
                                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -182,7 +174,7 @@ public class SalesForm extends javax.swing.JFrame {
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel6))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -203,7 +195,7 @@ public class SalesForm extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -230,7 +222,7 @@ public class SalesForm extends javax.swing.JFrame {
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,16 +238,32 @@ public class SalesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        // TODO add your handling code here:        
-        Object val = jList1.getSelectedValue();
+        // TODO add your handling code here:
+        DefaultTableModel dmPemesanan = (DefaultTableModel) jTable1.getModel();
+        Object val = jList1.getSelectedValue(); 
+        Object row[] = {
+            val,"",new JLabel()
+        };
          if (evt.getValueIsAdjusting() == false) {          
              if(jList1.getSelectedIndex()==-1){
-                 
-             }else{
-                 DefaultTableModel dmPemesanan = (DefaultTableModel) jTable1.getModel();
-                dmPemesanan.addRow(new Object[]{jList1.getSelectedValue()});
+                //nothing to do 
+             }else{                         
+                 dmPemesanan.addRow(row);
+                 JTable table = new JTable(dmPemesanan){
+                     @Override
+                     public Class getColumnClass(int columnIndex)
+                     {
+                         if(columnIndex == 2)return getValueAt(2, columnIndex).getClass();
+                         
+                         else return super.getColumnClass(columnIndex);
+                     }
+                 };
+                 table.setModel(dmPemesanan);
+                 table.setDefaultRenderer(JLabel.class, new IconTable());
+                 table.setVisible(true);
              }
         }
+        
     }//GEN-LAST:event_jList1ValueChanged
 
     /**
@@ -284,4 +292,5 @@ public class SalesForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
 }

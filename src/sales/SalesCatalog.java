@@ -29,7 +29,7 @@ public class SalesCatalog extends javax.swing.JFrame {
         //this.setExtendedState(t);
         this.setLocation(0,0);
         this.setSize(300,200);
-        
+        jInternalFrame1.setTitle("Catalog Vape");
         DefaultListModel dmJenisBarang = new SalesData().getJenisBarang();
         jList1.setModel(dmJenisBarang);      
     }
@@ -169,7 +169,7 @@ public void close(){
                     salesCatalog.setSize(1000,1000);
                     salesCatalog.setLocation(250,0);
                     salesCatalog.setVisible(true);                   
-                    
+                    salesCatalog.setTitle(String.valueOf(Val));
                 }catch(Exception e){
                     System.out.println("Cannot read file: " + e);
                 }              

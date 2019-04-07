@@ -37,7 +37,7 @@ public class Login extends javax.swing.JFrame {
         this.setSize(410,275);
         //new backImg();
         JLabel background;
-        ImageIcon img = new ImageIcon("D:\\vapeCatalog\\VapeApp\\src\\Img\\login.png");
+        ImageIcon img = new ImageIcon("src\\Img\\login.png");
         background = new JLabel("",img,JLabel.CENTER);
         background.setBounds(0, 0, 410, 275);
         add(background);

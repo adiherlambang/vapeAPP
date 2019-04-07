@@ -8,8 +8,11 @@ import DBConnector.MysqlCon;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Random;
 import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+
 /**
  *
  * @author adi herlambang
@@ -41,5 +44,38 @@ public class SalesData{
         }
         
         return null;
+    }
+    
+    public String generatedID() {
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMdd");
+        String val;
+        DB.config();
+        con = DB.con;
+        stm = DB.stm;
+        
+        
+        Random id_pemesanan = new Random();
+        Date date = new Date();
+        
+        //System.out.print(id_pemesanan);
+        
+        val = "PO"+dateformat.format(date)+id_pemesanan.nextInt(100000);
+        
+        sql="SELECT NomorPemesanan FROM `pemesanan_retailer`";
+        
+        try{
+            rs = stm.executeQuery(sql);
+            while(rs.next()){
+                if(val.equals(rs.getString(1))){
+                    val = "PO"+dateformat.format(date)+id_pemesanan.nextInt(100000);
+                }            
+            }
+            return val;
+        }catch(Exception e){
+            e.printStackTrace();           
+        }
+        
+        return null;
+        
     }
 }    

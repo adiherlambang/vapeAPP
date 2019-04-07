@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package login;
+package Login;
 
 import Admin.AddUser;
 import DBConnector.MysqlCon;
-import sales.SalesCatalog;
-import distributor.DistributorForm;
+import Sales.SalesCatalog;
+import Distributor.DistributorForm;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.sql.*;
@@ -19,7 +19,7 @@ import javax.swing.*;
  * @author adi herlambang
  */
 
-public class Login extends javax.swing.JFrame {
+public class LoginForm extends javax.swing.JFrame {
     public static Connection con;
     public static Statement stm;
     ResultSet rs;
@@ -29,7 +29,7 @@ public class Login extends javax.swing.JFrame {
      */
     
     
-    public Login() {
+    public LoginForm() {
         initComponents();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -46,10 +46,6 @@ public class Login extends javax.swing.JFrame {
         DB.config();
         con = DB.con;
         stm = DB.stm;
-    }
-    public void close(){ 
-        WindowEvent winClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,6 +148,10 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here: 
+    if(jTextField1.getText().equals("") && jPasswordField1.getText().equals("")){
+        JOptionPane.showMessageDialog(null, "Please Input Username and Password");
+    }
+    else{
     try{
         sql = "SELECT * FROM login WHERE username='"+jTextField1.getText()+"' AND password='"+jPasswordField1.getText()+"'";
         rs = stm.executeQuery(sql);       
@@ -185,6 +185,7 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved

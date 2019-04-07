@@ -6,48 +6,45 @@
 package BackgorundIMg;
 
 
+import java.awt.Color;
 import java.awt.Component;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author adi herlambang
  */
-public class IconTable extends DefaultTableCellRenderer{
-
-    public void fillColor(JTable t,JLabel l,boolean isSelected ){
-        //setting the background and foreground when JLabel is selected
+public class IconTable extends JLabel implements TableCellRenderer{
+      
+      public IconTable(String path){
+          setOpaque(true);
+          //setBackground(Color.BLUE);
+           //URL imgURL = getClass().getResource(path);
+           this.setText("delete");
+           this.setIcon(new ImageIcon(path));
+           this.setSize(35,40);
+      }
+     @Override
+      public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        
+        setSize(table.getRowHeight(row),Short.SIZE);
+        
         if(isSelected){
-            l.setBackground(t.getSelectionBackground());
-            l.setForeground(t.getSelectionForeground());
-        }
- 
-        else{
-            l.setBackground(t.getBackground());
-            l.setForeground(t.getForeground());
-        }
- 
-    }
-    
-@Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-         boolean hasFocus, int row, int column)
-     {
- 
-        if(value instanceof JLabel){
-            JLabel label = (JLabel)value;
-            //you can add the image here
+            setBackground(Color.cyan);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            int rows = table.getSelectedRow();
+            model.removeRow(rows);
             
-            label.setIcon(new ImageIcon(getClass().getResource("src\\Img\\login.png")));
-            label.setOpaque(true);
-            fillColor(table,label,isSelected);
- 
-            return label;
-        }  
-        return null;
-     }    
-
+        }else{
+            setBackground(Color.WHITE);
+        } 
+        return this;
+        
+      }
 }

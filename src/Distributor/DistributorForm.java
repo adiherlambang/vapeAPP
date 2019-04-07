@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package distributor;
+package Distributor;
 
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import login.UserStatus;
+import Login.UserStatus;
 
 /**
  *
@@ -248,7 +248,7 @@ public class DistributorForm extends javax.swing.JFrame {
         switch (input){
             case 0: //input yes
                 this.dispose();
-                JFrame login_frame = new login.Login();
+                JFrame login_frame = new Login.LoginForm();
                 login_frame.setVisible(true);
                 break; 
             case 1: //input no
